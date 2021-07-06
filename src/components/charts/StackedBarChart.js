@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Bar } from "react-chartjs-2";
 import { runInfluxQuery } from "../../api/query_runner";
+import DatePicker from "react-datepicker";
 var _ = require("lodash");
 
 const colors = [
@@ -18,7 +19,7 @@ export class StackedBarChart extends Component {
     this.query = props.query;
     this.chartTitle = props.chartTitle;
     this.toggleVariable = props.toggleVariable;
-
+    this.startDate = new Date();
     this.state = {
       isFetching: false,
       data: {},
@@ -65,6 +66,7 @@ export class StackedBarChart extends Component {
         }
       }
     }
+    this.startDate = Date.parse(labels[0]);
     console.log(dataArrays);
     let datasets = [];
     let colorChanger = 0;
@@ -89,68 +91,90 @@ export class StackedBarChart extends Component {
   componentDidMount() {
     this.fetchData();
   }
+  onDateChanged(date) {
+    // here the query should be updated
+    this.query = this.query.replace(
+      / *\(start:[^)]*\) */g,
+      `(start: ${date.getTime() / 1000}) `
+    );
+    this.startDate = new Date(date);
+    this.fetchData();
+  }
   render() {
     return (
       <>
-        <div className="container">
-          <h4>{this.chartTitle}</h4>
-        </div>
-        <div className="container">
-          <Bar
-            data={this.state.data}
-            height={400}
-            options={{
-              offsetGridLines: true,
-              drawTicks: true,
-              layout: {
-                padding: {
-                  top: 30,
-                  right: 40,
-                  bottom: 40,
-                },
-              },
-              legend: {
-                display: true,
-                position: "right",
-                align: "start",
-                labels: {
-                  usePointStyle: true,
-                },
-              },
-              responsive: true,
-              maintainAspectRatio: false,
-              scales: {
-                xAxes: [
-                  {
-                    stacked: true,
-                    ticks: {
-                      padding: 5,
-                    },
-                    gridLines: {
-                      display: false,
-                    },
+        <div className="container chart-box" style={{marginTop: '10px'}}>
+          <div>
+            <div className="row">
+              <div className="col-6">
+                <h4>{this.chartTitle}</h4>
+              </div>
+              <div className="col-6" style={{ textAlign: "right" }}>
+                <label>Start time: </label> &nbsp; &nbsp;
+                <DatePicker
+                  selected={this.startDate}
+                  onChange={(date) => this.onDateChanged(date)}
+                />
+              </div>
+            </div>
+          </div>
+          <div>
+            <Bar
+              data={this.state.data}
+              height={400}
+              options={{
+                offsetGridLines: true,
+                drawTicks: true,
+                layout: {
+                  padding: {
+                    top: 30,
+                    right: 40,
+                    bottom: 40,
                   },
-                ],
-                yAxes: [
-                  {
-                    stacked: true,
-                    gridLines: {
-                      drawBorder: false,
-                    },
-                    ticks: {
-                      beginAtZero: true,
-                      maxTicksLimit: 6,
-                      padding: 20,
-                      callback(n) {
-                        if (n < 1e3) return n;
-                        if (n >= 1e3) return +(n / 1e3).toFixed(1) + "K";
+                },
+                legend: {
+                  display: true,
+                  position: "right",
+                  align: "start",
+                  labels: {
+                    usePointStyle: true,
+                  },
+                },
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                  xAxes: [
+                    {
+                      stacked: true,
+                      ticks: {
+                        padding: 5,
+                      },
+                      gridLines: {
+                        display: false,
                       },
                     },
-                  },
-                ],
-              },
-            }}
-          />
+                  ],
+                  yAxes: [
+                    {
+                      stacked: true,
+                      gridLines: {
+                        drawBorder: false,
+                      },
+                      ticks: {
+                        beginAtZero: true,
+                        maxTicksLimit: 6,
+                        padding: 20,
+                        callback(n) {
+                          if (n < 1e3) return n;
+                          if (n >= 1e3) return +(n / 1e3).toFixed(1) + "K";
+                        },
+                      },
+                    },
+                  ],
+                },
+              }}
+            />
+          </div>
         </div>
       </>
     );

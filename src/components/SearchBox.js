@@ -5,7 +5,8 @@ export class SearchBox extends Component {
   render() {
     return (
       <>
-        <div className="row search-box-container">
+        <div className="row search-box-container">          
+          <h2 style={{color:'white'}}>Iotube Dashboard</h2>
           <Form className="search-form" inline>
             <FormControl type="text" placeholder="Search" className="mr-2 search-input" />
             <Button variant="outline-dark">Search</Button>

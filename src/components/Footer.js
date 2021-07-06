@@ -7,7 +7,7 @@ export class Footer extends Component {
         <div className="container-fluid footer-container">
           <div className="footer-card mt-5 mx-5">
             <div className="row mb-4 ">
-              <div className="col-md-4 col-sm-11 col-xs-11">
+              <div className="col-md-6 col-xs-12">
                 <div className="footer-text pull-left">
                   <div className="d-flex">
                     <h1
@@ -24,11 +24,13 @@ export class Footer extends Component {
                         {/* social network links could be added later */}
                   </div>
                 </div>
+        
               </div>
-              <div className="col-md-6 col-sm-4 col-xs-4" style={{textAlign: 'end'}}>
+              <div className="col-md-6 col-xs-12">
                 <h5 className="heading">IoTube</h5>
                 <ul className="card-text">
-                  <li>GitHub</li>
+                  <li> <a href="https://github.com/IoTube-analytics/react-iotube-analytics">Front end on GitHub</a> </li>
+                  <li> <a href="https://github.com/IoTube-analytics/go-iotube-analytics">Beckend on Github</a> </li>
                 </ul>
               </div>
             </div>

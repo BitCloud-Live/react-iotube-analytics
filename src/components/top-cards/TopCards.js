@@ -4,7 +4,7 @@ import NumberIconBox from "../NumberIconBox";
 export class TopCards extends Component {
   render() {
     return (
-      <div className="container p-1 top-cards-container">
+      <div className="container top-cards-container">
         <div className="row no-gutters">
           <div className="col-lg-12 d-flex align-self-stretch col-sm-12 col-xs-12 card p-1">
             <div className="row d-flex align-self-stretch justify-content-center no-gutters">
