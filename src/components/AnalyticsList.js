@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import axois from "axios";
 import { Table } from "react-bootstrap";
+import {runInfluxQuery} from '../api/query_runner';
 
 export class AnalyticsList extends Component {
   constructor(props) {
@@ -10,32 +10,13 @@ export class AnalyticsList extends Component {
       data: [],
     };
   }
-  fetchData() {
-    const url = "http://127.0.0.1:9090/api/v1/query";
-    const params =
-      'from(bucket: "my-bucket") |> range(start: -1h) |> filter(fn: (r) => r["_measurement"] == "blockchain") |> filter(fn: (r) => r["_field"] == "block_number") |> filter(fn: (r) => r["network"] == "ethereum") |> last()';
-    return new Promise((resolve) => {
-      axois
-        .post(url, params, {
-          headers: {},
-        })
-        .then(function (response) {
-          resolve(response.data.data.result);
-        })
-        .catch(function (error) {
-          console.log(error);
-          resolve(error);
-        });
-    });
-  }
-  async startFetchData() {
+  async fetchData() {
     this.setState({ ...this.state, isFetching: true });
-    const result = await this.fetchData();
-    console.log(result[0]);
+    const result = await runInfluxQuery('from(bucket: "my-bucket") |> range(start: -1h) |> filter(fn: (r) => r["_measurement"] == "blockchain") |> filter(fn: (r) => r["_field"] == "block_number") |> filter(fn: (r) => r["network"] == "ethereum") |> last()');
     this.setState({ data: result, isFetching: false });
   }
   componentDidMount() {
-    this.startFetchData();
+    this.fetchData();
   }
   render() {
     let tableRows = [];
@@ -43,7 +24,7 @@ export class AnalyticsList extends Component {
       let currentRow = this.state.data[i];
       if (typeof currentRow != "undefined") {
         tableRows.push(
-          <tr>
+          <tr key={i}>
             <td>{i+1}</td>
             <td>{currentRow.network}</td>
             <td>{currentRow._measurement}</td>
@@ -58,7 +39,7 @@ export class AnalyticsList extends Component {
     return (
       <>
         <div className="container" style={{ marginTop: "20px" }}>
-          <Table striped bordered hover>
+          <Table responsive striped bordered hover>
             <thead>
               <tr>
                 <th>#</th>
