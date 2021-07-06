@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { FaBattleNet } from "react-icons/fa";
 import { BsFillPieChartFill, BsPeopleFill } from "react-icons/bs";
+import {FaCommentDollar} from 'react-icons/fa';
+import {BiDollar} from 'react-icons/bi';
 import { MdTimeline } from 'react-icons/md';
 import { IconContext } from "react-icons";
 import { runInfluxQuery } from "../api/query_runner";
@@ -19,6 +21,12 @@ export class NumberIconBox extends Component {
         break;
       case "BsPeopleFill":
         this.staticIcon = <BsPeopleFill />;
+        break;
+      case "FaCommentDollar":
+        this.staticIcon = <FaCommentDollar />
+        break;
+      case "BiDollar":
+        this.staticIcon = <BiDollar />
         break;
       default:
         this.staticIcon = <BsFillPieChartFill />;

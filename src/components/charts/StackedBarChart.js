@@ -103,7 +103,7 @@ export class StackedBarChart extends Component {
   render() {
     return (
       <>
-        <div className="container chart-box" style={{marginTop: '10px'}}>
+        <div className="chart-box" style={{marginTop: '10px'}}>
           <div>
             <div className="row">
               <div className="col-6">

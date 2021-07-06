@@ -12,7 +12,7 @@ export class AnalyticsList extends Component {
   }
   async fetchData() {
     this.setState({ ...this.state, isFetching: true });
-    const result = await runInfluxQuery('from(bucket: "my-bucket") |> range(start: -1h) |> filter(fn: (r) => r["_measurement"] == "blockchain") |> filter(fn: (r) => r["_field"] == "block_number") |> filter(fn: (r) => r["network"] == "ethereum") |> last()');
+    const result = await runInfluxQuery('tvl = from(bucket: "my-bucket") |> range(start: 1593786824) |> filter(fn: (r) => r["_measurement"] == "tvl") |> filter(fn: (r) => r["_field"] == "tvl") |> last() price = from(bucket: "my-bucket") |> range(start: 1593786824) |> filter(fn: (r) => r["_measurement"] == "price")|> last() usd_tvl = join(tables: {tvl: tvl, price: price}, on: ["symbol"]) |> map(fn: (r) => ({time: r._time_tvl, tvl: r._value_tvl, tvl_usd: r._value_tvl * r._value_price, price: r._value_price, symbol: r.symbol})) |> yield(name: "1")');
     this.setState({ data: result, isFetching: false });
   }
   componentDidMount() {
@@ -26,12 +26,11 @@ export class AnalyticsList extends Component {
         tableRows.push(
           <tr key={i}>
             <td>{i+1}</td>
-            <td>{currentRow.network}</td>
-            <td>{currentRow._measurement}</td>
-            <td>{currentRow._value}</td>
-            <td>{currentRow._start}</td>
-            <td>{currentRow._stop}</td>
-            <td>{currentRow._time}</td>
+            <td>{currentRow.symbol}</td>
+            <td>{currentRow.price}</td>
+            <td>{currentRow.tvl}</td>
+            <td>{currentRow.tvl_usd}</td>
+            <td>{currentRow.time}</td>
           </tr>
         );
       }
@@ -43,11 +42,10 @@ export class AnalyticsList extends Component {
             <thead>
               <tr>
                 <th>#</th>
-                <th>Network</th>
-                <th>Measurement</th>
-                <th>Value</th>
-                <th>Start</th>
-                <th>Stop</th>
+                <th>Symbol</th>
+                <th>Price</th>
+                <th>Tvl</th>
+                <th>Tvl_usd</th>
                 <th>Time</th>
               </tr>
             </thead>
