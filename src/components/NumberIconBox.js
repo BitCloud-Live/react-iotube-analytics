@@ -6,13 +6,16 @@ import {BiDollar} from 'react-icons/bi';
 import { MdTimeline } from 'react-icons/md';
 import { IconContext } from "react-icons";
 import { runInfluxQuery } from "../api/query_runner";
+import {Context} from '../reducer/Store';
 
 export class NumberIconBox extends Component {
+
+  static contextType = Context;
+
   constructor(props) {
     super(props);
     this.title = props.title;
     this.iconCode = props.iconCode;
-    this.query = props.query;
     // the graphic related props
     this.staticIcon = "";
     switch (this.iconCode) {
@@ -32,21 +35,32 @@ export class NumberIconBox extends Component {
         this.staticIcon = <BsFillPieChartFill />;
         break;
     }
+    
     this.state = {
       isFetching: false,
       data: [],
+      network: 'ethereum',
+      query: props.query
     };
   }
 
   async fetchData() {
+    let q = this.state.query.replace(/%\w+%/g, this.state.network);
     const result = await runInfluxQuery(
-      this.query
+      q
     );
     this.setState({ data: result[0], isFetching: false });
   }
 
   componentDidMount() {
     this.fetchData();
+  }
+  componentDidUpdate(){
+    const [contextState, ] = this.context;
+    if(contextState.network !== this.state.network){
+      this.setState({ ...this.state, network: contextState.network });
+      this.fetchData();
+    }
   }
 
   render() {

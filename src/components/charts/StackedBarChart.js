@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Bar } from "react-chartjs-2";
 import { runInfluxQuery } from "../../api/query_runner";
 import DatePicker from "react-datepicker";
+import { Context } from "../../reducer/Store";
 var _ = require("lodash");
 
 const colors = [
@@ -14,15 +15,18 @@ const colors = [
 ];
 
 export class StackedBarChart extends Component {
+  static contextType = Context;
+
   constructor(props) {
     super(props);
-    this.query = props.query;
     this.chartTitle = props.chartTitle;
     this.toggleVariable = props.toggleVariable;
-    this.startDate = new Date();
+
     this.state = {
       isFetching: false,
       data: {},
+      startDate: new Date(),
+      query: props.query,
     };
   }
   /*
@@ -38,7 +42,9 @@ export class StackedBarChart extends Component {
     return value;
   }
   async fetchData() {
-    const result = await runInfluxQuery(this.query);
+    const [contextState] = this.context;
+    let q = this.state.query.replace(/%\w+%/g, contextState.network);
+    const result = await runInfluxQuery(q);
     // process data
     const dailyResult = result.map(this.groupday);
     // group array based on their symbol
@@ -67,7 +73,7 @@ export class StackedBarChart extends Component {
       }
     }
     this.startDate = Date.parse(labels[0]);
-    console.log(dataArrays);
+
     let datasets = [];
     let colorChanger = 0;
     for (const d in dataArrays) {
@@ -93,17 +99,28 @@ export class StackedBarChart extends Component {
   }
   onDateChanged(date) {
     // here the query should be updated
-    this.query = this.query.replace(
-      / *\(start:[^)]*\) */g,
-      `(start: ${date.getTime() / 1000}) `
-    );
-    this.startDate = new Date(date);
+    this.setState({
+      ...this.state,
+      startDate: new Date(date),
+      query: this.state.query.replace(
+        / *\(start:[^)]*\) */g,
+        `(start: ${date.getTime() / 1000}) `
+      ),
+    });
+
     this.fetchData();
+  }
+  componentDidUpdate() {
+    const [contextState] = this.context;
+    if (contextState.network !== this.state.network) {
+      this.setState({ ...this.state, network: contextState.network });
+      this.fetchData();
+    }
   }
   render() {
     return (
       <>
-        <div className="chart-box" style={{marginTop: '10px'}}>
+        <div className="chart-box" style={{ marginTop: "10px" }}>
           <div>
             <div className="row">
               <div className="col-6">
@@ -112,7 +129,7 @@ export class StackedBarChart extends Component {
               <div className="col-6" style={{ textAlign: "right" }}>
                 <label>Start time: </label> &nbsp; &nbsp;
                 <DatePicker
-                  selected={this.startDate}
+                  selected={this.state.startDate}
                   onChange={(date) => this.onDateChanged(date)}
                 />
               </div>
