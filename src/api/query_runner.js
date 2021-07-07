@@ -1,6 +1,6 @@
 import axois from "axios";
 export function runInfluxQuery(query) {
-  const url = "http://127.0.0.1:9090/api/v1/query";
+  const url = "https://onebeaconme.live/api/v1/query";
   return new Promise((resolve) => {
     axois
       .post(url, query, {
