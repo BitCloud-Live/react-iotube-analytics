@@ -1,0 +1,25 @@
+{
+  "files": {
+    "main.css": "/react-iotube-analytics/static/css/main.cc6ebfd3.chunk.css",
+    "main.js": "/react-iotube-analytics/static/js/main.f3ebfce7.chunk.js",
+    "main.js.map": "/react-iotube-analytics/static/js/main.f3ebfce7.chunk.js.map",
+    "runtime-main.js": "/react-iotube-analytics/static/js/runtime-main.ac0dd589.js",
+    "runtime-main.js.map": "/react-iotube-analytics/static/js/runtime-main.ac0dd589.js.map",
+    "static/css/2.53b74bfb.chunk.css": "/react-iotube-analytics/static/css/2.53b74bfb.chunk.css",
+    "static/js/2.e986cde9.chunk.js": "/react-iotube-analytics/static/js/2.e986cde9.chunk.js",
+    "static/js/2.e986cde9.chunk.js.map": "/react-iotube-analytics/static/js/2.e986cde9.chunk.js.map",
+    "static/js/3.f1922725.chunk.js": "/react-iotube-analytics/static/js/3.f1922725.chunk.js",
+    "static/js/3.f1922725.chunk.js.map": "/react-iotube-analytics/static/js/3.f1922725.chunk.js.map",
+    "index.html": "/react-iotube-analytics/index.html",
+    "static/css/2.53b74bfb.chunk.css.map": "/react-iotube-analytics/static/css/2.53b74bfb.chunk.css.map",
+    "static/css/main.cc6ebfd3.chunk.css.map": "/react-iotube-analytics/static/css/main.cc6ebfd3.chunk.css.map",
+    "static/js/2.e986cde9.chunk.js.LICENSE.txt": "/react-iotube-analytics/static/js/2.e986cde9.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.ac0dd589.js",
+    "static/css/2.53b74bfb.chunk.css",
+    "static/js/2.e986cde9.chunk.js",
+    "static/css/main.cc6ebfd3.chunk.css",
+    "static/js/main.f3ebfce7.chunk.js"
+  ]
+}
