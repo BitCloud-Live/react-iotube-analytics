@@ -2,7 +2,7 @@
   "name": "iotube-analytics-dashboard",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://ioTube-analytics.github.io/react-iotube-analytics/",
+  "homepage": "https://IoTube-analytics.github.io/react-iotube-analytics/",
   "dependencies": {
     "@influxdata/influxdb-client": "^1.14.0",
     "@testing-library/jest-dom": "^5.11.4",
