@@ -42,7 +42,7 @@ export class StackedBarChart extends Component {
     return value;
   }
   async fetchData() {
-    const [contextState] = this.context;
+    const [contextState,] = this.context;
     let q = this.state.query.replace(/%\w+%/g, contextState.network);
     const result = await runInfluxQuery(q);
     if (!Array.isArray(result)) {

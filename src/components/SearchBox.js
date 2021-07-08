@@ -20,7 +20,6 @@ export class SearchBox extends Component {
           <h2 style={{ color: "white", textAlign: 'center' }}>Iotube Dashboard</h2>
           <Form className="search-form">
             <Form.Control style={{ width: '40%', textAlign: 'center', minHeight: '2.5rem' }} as="select" size="lg" custom onChange={this.onChangeBridge.bind(this)}>
-              <option value='USE_ETHEREUM'>Select the bridge (default is ethereum)...</option>
               <option value='USE_ETHEREUM'>Ethereum</option>
               <option value='USE_POLYGON'>Polygon</option>
               <option value='USE_BSC'>BSC</option>

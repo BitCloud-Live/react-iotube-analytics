@@ -18,10 +18,10 @@ export class AnalyticsList extends Component {
       network: 'ethereum'
     };
   }
-  async fetchData() {
-    let q = this.state.query.replace(/%\w+%/g, this.state.network);
+  async fetchData(network) {
+    let q = this.state.query.replace(/%\w+%/g, network);
     const result = await runInfluxQuery(q);
-    this.setState({ data: result, isFetching: false });
+    this.setState({ data: result, network: network, isFetching: false });
   }
   componentDidMount() {
     const [contextState,] = this.context;
@@ -29,13 +29,13 @@ export class AnalyticsList extends Component {
       ...this.state, isFetching: true,
       network: contextState.network
     });
-    this.fetchData();
+    this.fetchData('ethereum');
   }
   componentDidUpdate() {
     const [contextState,] = this.context;
     if (contextState.network !== this.state.network) {
       this.setState({ ...this.state, network: contextState.network });
-      this.fetchData();
+      this.fetchData(contextState.network);
     }
   }
   render() {

@@ -16,6 +16,7 @@ export class NumberIconBox extends Component {
     super(props);
     this.title = props.title;
     this.iconCode = props.iconCode;
+    this.valueType = props.valueType;
     // the graphic related props
     this.staticIcon = "";
     switch (this.iconCode) {
@@ -44,26 +45,34 @@ export class NumberIconBox extends Component {
     };
   }
 
-  async fetchData() {
-    let q = this.state.query.replace(/%\w+%/g, this.state.network);
+  async fetchData(network) {
+    let q = this.state.query.replace(/%\w+%/g, network);
     const result = await runInfluxQuery(
       q
     );
-    this.setState({ data: result[0], isFetching: false });
+    this.setState({ ...this.state, network: network, data: result[0], isFetching: false });
   }
 
   componentDidMount() {
-    this.fetchData();
+    this.fetchData('ethereum');
   }
   componentDidUpdate() {
     const [contextState,] = this.context;
     if (contextState.network !== this.state.network) {
       this.setState({ ...this.state, network: contextState.network });
-      this.fetchData();
+      this.fetchData(contextState.network);
     }
   }
 
   render() {
+    let value = 0;
+    if (this.valueType === 'int') {
+      value = typeof (this.state.data) != "undefined" && typeof (this.state.data._value) != "undefined" && parseInt(this.state.data._value);
+    } else {
+      value = typeof (this.state.data) != "undefined" && typeof (this.state.data._value) != "undefined" && this.state.data._value.toFixed(4);
+
+    }
+
     return (
       <div>
         <div className="row">
@@ -84,7 +93,8 @@ export class NumberIconBox extends Component {
               <IconContext.Provider value={{ color: "#82CA9D", size: "35px" }}>
                 {this.staticIcon}
               </IconContext.Provider>
-              <p className="value">{typeof (this.state.data) != "undefined" && typeof (this.state.data._value) != "undefined" && this.state.data._value.toFixed(4)}</p>
+              {!this.state.isFetching && <p className="value">{value}</p>}
+              {this.state.isFetching && <p>Loading...</p>}
             </div>
           </div>
         </div>
