@@ -59,7 +59,7 @@ export class NumberIconBox extends Component {
   componentDidUpdate() {
     const [contextState,] = this.context;
     if (contextState.network !== this.state.network) {
-      this.setState({ ...this.state, network: contextState.network });
+      this.setState({ ...this.state, data: undefined, network: contextState.network });
       this.fetchData(contextState.network);
     }
   }
@@ -94,7 +94,7 @@ export class NumberIconBox extends Component {
                 {this.staticIcon}
               </IconContext.Provider>
               {!this.state.isFetching && <p className="value">{value}</p>}
-              {this.state.isFetching && <p>Loading...</p>}
+              {(typeof (this.state.data) === "undefined" || typeof (this.state.data._value) === "undefined") && <p>Loading...</p>}
             </div>
           </div>
         </div>
