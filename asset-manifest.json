@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/react-iotube-analytics/static/css/main.cc6ebfd3.chunk.css",
-    "main.js": "/react-iotube-analytics/static/js/main.2a16b645.chunk.js",
-    "main.js.map": "/react-iotube-analytics/static/js/main.2a16b645.chunk.js.map",
+    "main.js": "/react-iotube-analytics/static/js/main.ff216491.chunk.js",
+    "main.js.map": "/react-iotube-analytics/static/js/main.ff216491.chunk.js.map",
     "runtime-main.js": "/react-iotube-analytics/static/js/runtime-main.ac0dd589.js",
     "runtime-main.js.map": "/react-iotube-analytics/static/js/runtime-main.ac0dd589.js.map",
     "static/css/2.e01eca1c.chunk.css": "/react-iotube-analytics/static/css/2.e01eca1c.chunk.css",
@@ -34,6 +34,6 @@
     "static/css/2.e01eca1c.chunk.css",
     "static/js/2.1bff1651.chunk.js",
     "static/css/main.cc6ebfd3.chunk.css",
-    "static/js/main.2a16b645.chunk.js"
+    "static/js/main.ff216491.chunk.js"
   ]
 }
