@@ -56,7 +56,7 @@ export class StackedBarChart extends Component {
     let dataArrays = {};
     for (const gdata in grouped) {
       const counter = {};
-      labels.push(grouped[gdata][0]["time"].toString());
+      labels.push(grouped[gdata][0]["time"].toString().substr(0, 10));
       for (const item in grouped[gdata]) {
         const key = grouped[gdata][item][this.toggleVariable];
         if (key in counter) {
