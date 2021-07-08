@@ -18,24 +18,24 @@ export class Footer extends Component {
                     <h1 className="footer-logo">Devs</h1>
                   </div>
                   <p className="card-text">
-                    This is a Analytics dashboard for IoTube developed for the community 
+                    This is a Analytics dashboard for IoTube developed for the community
                   </p>
                   <div className="social mt-2 mb-3">
-                        {/* social network links could be added later */}
+                    {/* social network links could be added later */}
                   </div>
                 </div>
-        
+
               </div>
               <div className="col-md-6 col-xs-12">
                 <h5 className="heading">IoTube</h5>
                 <ul className="card-text">
                   <li> <a href="https://github.com/IoTube-analytics/react-iotube-analytics">Front end on GitHub</a> </li>
-                  <li> <a href="https://github.com/IoTube-analytics/go-iotube-analytics">Beckend on Github</a> </li>
+                  <li> <a href="https://github.com/IoTube-analytics/go-iotube-analytics">Backend on Github</a> </li>
                 </ul>
               </div>
             </div>
             <div className="divider mb-4"> </div>
-            <div className="row" style={{fontSize: '10px'}}>
+            <div className="row" style={{ fontSize: '10px' }}>
               <div className="col-md-6 col-sm-6 col-xs-6">
                 <div className="pull-left">
                   <p>
