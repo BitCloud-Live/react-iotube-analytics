@@ -7,6 +7,9 @@ export class TopCards extends Component {
     return (
       <div className="container top-cards-container">
         <div className="row">
+          <p style={{ textAlign: 'center', color: 'gray' }}>The values for following data are calculated since (Mon Jan 19 1970 06:17:54 UTC)</p>
+        </div>
+        <div className="row">
           <div className="col-lg-12 d-flex align-self-stretch col-sm-12 col-xs-12 card">
             <div className="row d-flex align-self-stretch justify-content-center no-gutters">
               <div className="col-lg-3 col-sm-12 col-xs-12 top-card m-1">
@@ -37,6 +40,12 @@ export class TopCards extends Component {
           </div>
         </div>
         <div className="row">
+
+        </div>
+        <div className="row">
+          <div className="col-lg-12">
+            <p style={{ textAlign: 'center', color: 'gray' }}>The values for following data are calculated for last 30 days</p>
+          </div>
           <div className="col-lg-12 d-flex align-self-stretch col-sm-12 col-xs-12 card">
             <div className="row d-flex align-self-stretch justify-content-center no-gutters">
               <div className="col-lg-6 col-sm-12 col-xs-12 top-card m-1">

@@ -60,6 +60,9 @@ export class AnalyticsList extends Component {
     return (
       <>
         <div className="container" style={{ marginTop: "20px" }}>
+          <div className="row">
+            <p style={{ textAlign: 'center', color: 'gray' }}>The values for following data are calculated for last 30 days</p>
+          </div>
           <Table responsive striped bordered hover>
             <thead>
               <tr>
