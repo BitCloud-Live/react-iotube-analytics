@@ -79,18 +79,26 @@ export class StackedBarChart extends Component {
 
     let datasets = [];
     let colorChanger = 0;
-    for (const d in dataArrays) {
-      datasets.push({
+    for (let d in dataArrays) {
+      let datum = {
         label: d,
         backgroundColor: colors[colorChanger],
         stack: "2",
         data: dataArrays[d],
-      });
+      };
+      if (d === 'left') {
+        datum.label = `left=from ${this.state.network}`;
+      }
+      if (d === 'right') {
+        datum.label = `right=from iotex`;
+      }
+      datasets.push(datum);
       colorChanger += 1;
       if (colorChanger > colors.length) {
         colorChanger = 0;
       }
     }
+
     let data = {
       labels: labels,
       datasets: datasets,
