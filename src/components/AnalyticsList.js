@@ -10,7 +10,7 @@ export class AnalyticsList extends Component {
 
   constructor(props) {
     super(props);
-    let query = `tvl = from(bucket: "my-bucket") |> range(start: 1593786824) |> filter(fn: (r) => r["_measurement"] == "tvl") |> filter(fn: (r) => r["_field"] == "tvl") |> last() price = from(bucket: "my-bucket") |> range(start: 1593786824) |> filter(fn: (r) => r["_measurement"] == "price") |> last() usd_tvl = join(tables: {tvl: tvl, price: price}, on: ["symbol"])|> map(fn: (r) => ({time: r._time_tvl,tvl: r._value_tvl,tvl_usd: r._value_tvl * r._value_price,price: r._value_price,symbol: r.symbol}))|> yield(name: "1")`;
+    let query = `tvl = from(bucket: "my-bucket") |> range(start: 1593786824) |> filter(fn: (r) => r["_measurement"] == "tvl" and r["network"]=="%bridge%") |> filter(fn: (r) => r["_field"] == "tvl") |> last() price = from(bucket: "my-bucket") |> range(start: 1593786824) |> filter(fn: (r) => r["_measurement"] == "price") |> last() usd_tvl = join(tables: {tvl: tvl, price: price}, on: ["symbol"])|> map(fn: (r) => ({time: r._time_tvl,tvl: r._value_tvl,tvl_usd: r._value_tvl * r._value_price,price: r._value_price,symbol: r.symbol}))|> yield(name: "1")`;
     this.state = {
       isFetching: false,
       data: [],
