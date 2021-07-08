@@ -48,6 +48,7 @@ export class AnalyticsList extends Component {
           <tr key={i}>
             <td>{i + 1}</td>
             <td><img style={{ maxHeight: '2rem' }} src={getLogoByKey(currentRow.symbol)} alt={currentRow.symbol} /></td>
+            <td>{currentRow.symbol}</td>
             <td>{currentRow.price}</td>
             <td>{currentRow.tvl}</td>
             <td>{currentRow.tvl_usd}</td>
@@ -64,6 +65,7 @@ export class AnalyticsList extends Component {
               <tr>
                 <th>#</th>
                 <th>Symbol</th>
+                <th>Name</th>
                 <th>Price</th>
                 <th>Tvl</th>
                 <th>Tvl_usd</th>
