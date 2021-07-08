@@ -45,6 +45,9 @@ export class StackedBarChart extends Component {
     const [contextState] = this.context;
     let q = this.state.query.replace(/%\w+%/g, contextState.network);
     const result = await runInfluxQuery(q);
+    if (!Array.isArray(result)) {
+      return [];
+    }
     // process data
     const dailyResult = result.map(this.groupday);
     // group array based on their symbol

@@ -1,15 +1,45 @@
-# Getting Started with Create React App
+# IoTube Analytic Dashboard
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A dynamic powerful, well-structured dashboard front-end for IoTube analytics. 
 
 ## Available Scripts
 
 In the project directory, you can run:
 
-### `npm i`
+### `yarn install`
 
 This will install the third party modules.
 
-### `npm start`
+### `yarn start`
 
 This will start the dashboard on http://localhost:3000/
+
+# List of components 
+## SearchBox
+
+This component is intent to be a search mechanism but currently work as a select option
+for bridges 
+
+## NumberIconBox
+
+This component is responsible for rendering the Cards at the top of the page. 
+
+## StackedBarChart
+
+This is a dynamic component which can run influxdb queries and show them as stacked bar chart 
+
+## TopCards
+
+This component contains some NumberIconBox 
+
+## AnalticsList 
+
+This component is responsible for displaying the list at the bottom of charts. 
+
+# Utils 
+## query_runner 
+
+Simple utility function to call go api for running influxdb queries 
+
+# TODO 
+- Some dates in components such as NumberIconBox are statically set to last 30 days which is better to be handled by a date picker. 

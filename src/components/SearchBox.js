@@ -1,14 +1,14 @@
 import React, { Component } from "react";
 import { Form } from "react-bootstrap";
-import {Context} from '../reducer/Store';
+import { Context } from '../reducer/Store';
 
 export class SearchBox extends Component {
 
   static contextType = Context;
 
   onChangeBridge(e) {
-    const [ , dispatch] = this.context;
-    dispatch({type: e.target.value, payload: []});
+    const [, dispatch] = this.context;
+    dispatch({ type: e.target.value, payload: [] });
     console.log(e.target.value);
 
   }
@@ -17,9 +17,9 @@ export class SearchBox extends Component {
     return (
       <>
         <div className="row search-box-container">
-          <h2 style={{ color: "white" }}>Iotube Dashboard</h2>
-          <Form className="search-form" inline>
-            <Form.Control style={{width:'40%', textAlign:'center'}} as="select" custom onChange={this.onChangeBridge.bind(this)}>
+          <h2 style={{ color: "white", textAlign: 'center' }}>Iotube Dashboard</h2>
+          <Form className="search-form">
+            <Form.Control style={{ width: '40%', textAlign: 'center', minHeight: '2.5rem' }} as="select" size="lg" custom onChange={this.onChangeBridge.bind(this)}>
               <option value='USE_ETHEREUM'>Select the bridge (default is ethereum)...</option>
               <option value='USE_ETHEREUM'>Ethereum</option>
               <option value='USE_POLYGON'>Polygon</option>

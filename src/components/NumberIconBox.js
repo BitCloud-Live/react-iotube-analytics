@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 import { FaBattleNet } from "react-icons/fa";
 import { BsFillPieChartFill, BsPeopleFill } from "react-icons/bs";
-import {FaCommentDollar} from 'react-icons/fa';
-import {BiDollar} from 'react-icons/bi';
+import { FaCommentDollar } from 'react-icons/fa';
+import { BiDollar } from 'react-icons/bi';
 import { MdTimeline } from 'react-icons/md';
 import { IconContext } from "react-icons";
 import { runInfluxQuery } from "../api/query_runner";
-import {Context} from '../reducer/Store';
+import { Context } from '../reducer/Store';
 
 export class NumberIconBox extends Component {
 
@@ -35,7 +35,7 @@ export class NumberIconBox extends Component {
         this.staticIcon = <BsFillPieChartFill />;
         break;
     }
-    
+
     this.state = {
       isFetching: false,
       data: [],
@@ -55,9 +55,9 @@ export class NumberIconBox extends Component {
   componentDidMount() {
     this.fetchData();
   }
-  componentDidUpdate(){
-    const [contextState, ] = this.context;
-    if(contextState.network !== this.state.network){
+  componentDidUpdate() {
+    const [contextState,] = this.context;
+    if (contextState.network !== this.state.network) {
       this.setState({ ...this.state, network: contextState.network });
       this.fetchData();
     }
@@ -84,7 +84,7 @@ export class NumberIconBox extends Component {
               <IconContext.Provider value={{ color: "#82CA9D", size: "35px" }}>
                 {this.staticIcon}
               </IconContext.Provider>
-              <p className="value">{typeof(this.state.data) != "undefined" && this.state.data._value}</p>
+              <p className="value">{typeof (this.state.data) != "undefined" && typeof (this.state.data._value) != "undefined" && this.state.data._value.toFixed(4)}</p>
             </div>
           </div>
         </div>
