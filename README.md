@@ -26,7 +26,9 @@ This component is responsible for rendering the Cards at the top of the page.
 
 ## StackedBarChart
 
-This is a dynamic component which can run influxdb queries and show them as stacked bar chart 
+This is a dynamic component which can run influxdb queries and show them as stacked bar chart.
+This chart component dynamically creates the stacks based on the influxdb queries, 
+So just by designing query a chart could be generated dynamically, also queries can have dynamic parameters every parameter inside %some_parameter% could be named and replaced dynamically. 
 
 ## TopCards
 
