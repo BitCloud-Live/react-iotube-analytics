@@ -12,6 +12,8 @@ const colors = [
   "#ff2500",
   "#005aff",
   "#a500ff",
+  "#0052f2",
+  "#f2550f",
 ];
 
 export class StackedBarChart extends Component {
@@ -24,7 +26,7 @@ export class StackedBarChart extends Component {
     // this supports two values: dropDown and Date
     // Date will renders date component and dropDown renders a dropDown component
     this.dateRenderer = props.dateRenderer;
-    console.log(props.aggregateApproach);
+
     this.aggregateApproach =
       typeof props.aggregateApproach === "undefined"
         ? "count"
@@ -50,6 +52,8 @@ export class StackedBarChart extends Component {
     return value;
   }
   async fetchData(network, query) {
+    console.log(query);
+
     let q = query.replace(/%\w+%/g, network);
     const result = await runInfluxQuery(q);
     if (!Array.isArray(result)) {
@@ -70,7 +74,7 @@ export class StackedBarChart extends Component {
         priceDictionary[priceResult[index].symbol] = priceResult[index]._value;
       }
     }
-    console.log(priceDictionary);
+
     for (const gdata in grouped) {
       const counter = {};
       // grouped[gdata][0]["time"].toString().substr(0, 10)
@@ -156,10 +160,11 @@ export class StackedBarChart extends Component {
       startDate: new Date(date),
       query: query,
     });
-    this.fetchData(this.state.network);
+    this.fetchData(this.state.network, this.state.query);
   }
   onDropDownChange(date) {
     let query = this.state.query;
+
     query = query.replace(/ *\(start:[^)]*\) */g, `(start: ${date.value})`);
     this.setState({
       ...this.state,
@@ -169,10 +174,10 @@ export class StackedBarChart extends Component {
     this.fetchData(this.state.network, query);
   }
   componentDidUpdate() {
-    const [contextState] = this.context;
+    const [contextState, ] = this.context;
     if (contextState.network !== this.state.network) {
       this.setState({ ...this.state, network: contextState.network });
-      this.fetchData(contextState.network);
+      this.fetchData(contextState.network, this.state.query);
     }
   }
   render() {
@@ -182,7 +187,7 @@ export class StackedBarChart extends Component {
           <div>
             <div className="row">
               <div className="col-6">
-                <h4>{this.chartTitle}</h4>
+                <h5>{this.chartTitle}</h5>
               </div>
               <div className="col-6" style={{ textAlign: "right" }}>
                 <label>Start time: </label> &nbsp; &nbsp;
@@ -197,12 +202,10 @@ export class StackedBarChart extends Component {
                     onChange={(e) =>
                       this.onDropDownChange({ value: e.target.value })
                     }
-                    defaultValue='-12d'
+                    defaultValue="-14d"
                   >
                     <option value="-1d">Last Day</option>
-                    <option value="-12d">
-                      Last Week
-                    </option>
+                    <option value="-14d">Last Week</option>
                     <option value="-1mo">Last Month</option>
                     <option value="-1y">Last Year</option>
                   </select>

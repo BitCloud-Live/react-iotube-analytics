@@ -18,42 +18,51 @@ function App() {
         <TopCards />
         <div className="container">
           <div className="row">
-            <div className="col-lg-6 col-xs-12">
+            <div className="col-12">
               <StackedBarChart
-                chartTitle="#Tx in vs #Tx out"
-                toggleVariable="bridge_side"
+                chartTitle="#Total transfer in USD by symbol (Daily)"
+                toggleVariable="symbol"
                 dateRenderer="dropDown"
-                aggregateApproach="count"
-                query={`from(bucket: "my-bucket") |> range(start: -12d) |> filter(fn: (r) => r["_measurement"] == "tx") |> filter(fn: (r) => r["_field"] == "amount") |> filter(fn: (r) => r["bridge"] == "%bridge%") |> group(columns: ["bridge_side"]) |> sort(columns: ["_time"]) |> map(fn: (r) => ({ time: r._time, symbol: r.symbol, bridge_side: r.bridge_side }))`}
+                aggregateApproach="sum"
+                query={`from(bucket: "my-bucket") |> range(start: -14d) |> filter(fn: (r) => r["_measurement"] == "tx") |> filter(fn: (r) => r["_field"] == "amount") |> filter(fn: (r) => r["bridge"] == "%bridge%") |> group(columns: ["symbol"]) |> sort(columns: ["_time"]) |> map(fn: (r) => ({ time: r._time, symbol: r.symbol, value: r._value }))`}
               />
             </div>
             <div className="col-lg-6 col-xs-12">
               <StackedBarChart
-                chartTitle="New users history"
+                chartTitle="#Tx in vs #Tx out (Daily)"
                 toggleVariable="bridge_side"
                 dateRenderer="dropDown"
                 aggregateApproach="count"
-                query={`from(bucket: "my-bucket") |> range(start: -12d) |> filter(fn: (r) => r["_measurement"] == "tx") |> filter(fn: (r) => r["bridge"] == "%bridge%") |> group(columns: ["from", "_time", "_field", "bridge_side"], mode: "by") |> count() |> group(columns: ["_field", "bridge_side"], mode: "by") |> sort(columns: ["_time"]) |> map(fn: (r) => ({time: r._time, bridge_side: r.bridge_side }))`}
+                query={`from(bucket: "my-bucket")|> range(start: -14d) |> filter(fn: (r) => r["_measurement"] == "tx") |> filter(fn: (r) => r["_field"] == "amount") |> filter(fn: (r) => r["bridge"] == "%bridge%") |> group(columns: ["bridge_side"]) |> sort(columns: ["_time"]) |> map(fn: (r) => ({ time: r._time, symbol: r.symbol, bridge_side: r.bridge_side }))`}
+              />
+            </div>
+            <div className="col-lg-6 col-xs-12">
+              <StackedBarChart
+                chartTitle="New Users (Daily)"
+                toggleVariable="bridge_side"
+                dateRenderer="dropDown"
+                aggregateApproach="count"
+                query={`from(bucket: "my-bucket") |> range(start: -14d) |> filter(fn: (r) => r["_measurement"] == "tx") |> filter(fn: (r) => r["bridge"] == "%bridge%") |> group(columns: ["from", "bridge_side"], mode: "by") |> min(column: "_time") |> map(fn: (r) => ({ time: r._time, bridge_side: r.bridge_side }))`}
               />
             </div>
           </div>
           <div className="row">
-            <div className="col-lg-12 col-xs-12">
+            <div className="col-lg-6 col-xs-12">
               <StackedBarChart
-                chartTitle="#Tx by symbol"
+                chartTitle="#Tx by symbol (Daily)"
                 toggleVariable="symbol"
                 dateRenderer="dropDown"
                 aggregateApproach="count"
-                query={`from(bucket: "my-bucket") |> range(start: -12d) |> filter(fn: (r) => r["_measurement"] == "tx") |> filter(fn: (r) => r["_field"] == "amount") |> filter(fn: (r) => r["bridge"] == "%bridge%") |> group(columns: ["symbol"]) |> sort(columns: ["_time"]) |> map(fn: (r) => ({time: r._time,symbol: r.symbol}))`}
+                query={`from(bucket: "my-bucket") |> range(start: -14d) |> filter(fn: (r) => r["_measurement"] == "tx") |> filter(fn: (r) => r["_field"] == "amount") |> filter(fn: (r) => r["bridge"] == "%bridge%") |> group(columns: ["symbol"]) |> sort(columns: ["_time"]) |> map(fn: (r) => ({time: r._time,symbol: r.symbol}))`}
               />
             </div>
-            <div className="col-lg-12 col-xs-12">
+            <div className="col-lg-6 col-xs-12">
               <StackedBarChart
-                chartTitle="#Total transfer in USD by symbol"
+                chartTitle="Daily Stablecoin transfers to IoTeX (BUSD,USDC,...)"
                 toggleVariable="symbol"
                 dateRenderer="dropDown"
-                aggregateApproach="sum"
-                query={`from(bucket: "my-bucket") |> range(start: -12d) |> filter(fn: (r) => r["_measurement"] == "tx") |> filter(fn: (r) => r["_field"] == "amount") |> filter(fn: (r) => r["bridge"] == "%bridge%") |> group(columns: ["symbol"]) |> sort(columns: ["_time"]) |> map(fn: (r) => ({ time: r._time, symbol: r.symbol, value: r._value }))`}
+                aggregateApproach="count"
+                query={`from(bucket: "my-bucket") |> range(start: -14d) |> filter(fn: (r) => r["_measurement"] == "tx") |> filter(fn: (r) => r["_field"] == "amount") |> filter(fn: (r) => r["bridge"] == "%bridge%") |> filter(fn: (r) => r["bridge_side"] == "left") |> filter(fn: (r) => r["symbol"] =~ /.*USD.*/) |> group(columns: ["symbol", "bridge_side"]) |> sort(columns: ["_time"]) |> map(fn: (r) => ({ time: r._time, symbol: r.symbol, value: r._value }))`}
               />
             </div>
           </div>
