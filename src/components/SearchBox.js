@@ -17,7 +17,7 @@ export class SearchBox extends Component {
     return (
       <>
         <div className="row search-box-container">
-          <h2 style={{ color: "white", textAlign: 'center' }}>Iotube Dashboard</h2>
+          {/* <h2 style={{ color: "white", textAlign: 'center' }}>Iotube Dashboard</h2> */}
           <Form className="search-form">
             <Form.Control style={{ width: '40%', textAlign: 'center', minHeight: '2.5rem' }} as="select" size="lg" custom onChange={this.onChangeBridge.bind(this)}>
               <option value='USE_ETHEREUM'>Ethereum</option>

@@ -21,12 +21,20 @@ export class StackedBarChart extends Component {
     super(props);
     this.chartTitle = props.chartTitle;
     this.toggleVariable = props.toggleVariable;
-
+    // this supports two values: dropDown and Date
+    // Date will renders date component and dropDown renders a dropDown component
+    this.dateRenderer = props.dateRenderer;
+    console.log(props.aggregateApproach);
+    this.aggregateApproach =
+      typeof props.aggregateApproach === "undefined"
+        ? "count"
+        : props.aggregateApproach;
     this.state = {
       isFetching: false,
       data: {},
       startDate: new Date(),
       query: props.query,
+      network: "ethereum",
     };
   }
   /*
@@ -41,9 +49,8 @@ export class StackedBarChart extends Component {
     value = { ...value, day: d };
     return value;
   }
-  async fetchData() {
-    const [contextState,] = this.context;
-    let q = this.state.query.replace(/%\w+%/g, contextState.network);
+  async fetchData(network, query) {
+    let q = query.replace(/%\w+%/g, network);
     const result = await runInfluxQuery(q);
     if (!Array.isArray(result)) {
       return [];
@@ -54,18 +61,47 @@ export class StackedBarChart extends Component {
     let grouped = _.groupBy(dailyResult, "day");
     let labels = [];
     let dataArrays = {};
+    const priceResult = await runInfluxQuery(
+      `from(bucket: "my-bucket") |> range(start: -14d) |> filter(fn: (r) => r["_measurement"] == "price") |> last()`
+    );
+    const priceDictionary = {};
+    for (let index in priceResult) {
+      if (!(priceResult[index].symbol in priceDictionary)) {
+        priceDictionary[priceResult[index].symbol] = priceResult[index]._value;
+      }
+    }
+    console.log(priceDictionary);
     for (const gdata in grouped) {
       const counter = {};
-      labels.push(grouped[gdata][0]["time"].toString().substr(0, 10));
-      for (const item in grouped[gdata]) {
-        const key = grouped[gdata][item][this.toggleVariable];
-        if (key in counter) {
-          counter[key] += 1;
-        } else {
-          counter[key] = 1;
+      // grouped[gdata][0]["time"].toString().substr(0, 10)
+      labels.push("");
+
+      if (this.aggregateApproach === "sum") {
+        for (const item in grouped[gdata]) {
+          const key = grouped[gdata][item][this.toggleVariable];
+          if (typeof grouped[gdata][item].value !== "undefined") {
+            if (key in counter) {
+              counter[key] +=
+                grouped[gdata][item].value *
+                priceDictionary[grouped[gdata][item].symbol];
+            } else {
+              counter[key] =
+                grouped[gdata][item].value *
+                priceDictionary[grouped[gdata][item].symbol];
+            }
+          }
         }
-        counter[grouped[gdata][item][this.toggleVariable]] += 1;
+      } else {
+        for (const item in grouped[gdata]) {
+          const key = grouped[gdata][item][this.toggleVariable];
+          if (key in counter) {
+            counter[key] += 1;
+          } else {
+            counter[key] = 1;
+          }
+        }
       }
+
       for (const d in counter) {
         if (d in dataArrays) {
           dataArrays[d].push(counter[d]);
@@ -86,10 +122,10 @@ export class StackedBarChart extends Component {
         stack: "2",
         data: dataArrays[d],
       };
-      if (d === 'left') {
+      if (d === "left") {
         datum.label = `left=from ${this.state.network}`;
       }
-      if (d === 'right') {
+      if (d === "right") {
         datum.label = `right=from iotex`;
       }
       datasets.push(datum);
@@ -106,26 +142,37 @@ export class StackedBarChart extends Component {
     this.setState({ ...this.state, data: data, isFetching: false });
   }
   componentDidMount() {
-    this.fetchData();
+    this.fetchData(this.state.network, this.state.query);
   }
   onDateChanged(date) {
     // here the query should be updated
+    let query = this.state.query;
+    query = query.replace(
+      / *\(start:[^)]*\) */g,
+      `(start: ${date.getTime() / 1000}) `
+    );
     this.setState({
       ...this.state,
       startDate: new Date(date),
-      query: this.state.query.replace(
-        / *\(start:[^)]*\) */g,
-        `(start: ${date.getTime() / 1000}) `
-      ),
+      query: query,
     });
-
-    this.fetchData();
+    this.fetchData(this.state.network);
+  }
+  onDropDownChange(date) {
+    let query = this.state.query;
+    query = query.replace(/ *\(start:[^)]*\) */g, `(start: ${date.value})`);
+    this.setState({
+      ...this.state,
+      startDate: date.value,
+      query: query,
+    });
+    this.fetchData(this.state.network, query);
   }
   componentDidUpdate() {
     const [contextState] = this.context;
     if (contextState.network !== this.state.network) {
       this.setState({ ...this.state, network: contextState.network });
-      this.fetchData();
+      this.fetchData(contextState.network);
     }
   }
   render() {
@@ -139,10 +186,27 @@ export class StackedBarChart extends Component {
               </div>
               <div className="col-6" style={{ textAlign: "right" }}>
                 <label>Start time: </label> &nbsp; &nbsp;
-                <DatePicker
-                  selected={this.state.startDate}
-                  onChange={(date) => this.onDateChanged(date)}
-                />
+                {this.dateRenderer === "Date" && (
+                  <DatePicker
+                    selected={this.state.startDate}
+                    onChange={(date) => this.onDateChanged(date)}
+                  />
+                )}
+                {this.dateRenderer === "dropDown" && (
+                  <select
+                    onChange={(e) =>
+                      this.onDropDownChange({ value: e.target.value })
+                    }
+                    defaultValue='-12d'
+                  >
+                    <option value="-1d">Last Day</option>
+                    <option value="-12d">
+                      Last Week
+                    </option>
+                    <option value="-1mo">Last Month</option>
+                    <option value="-1y">Last Year</option>
+                  </select>
+                )}
               </div>
             </div>
           </div>
