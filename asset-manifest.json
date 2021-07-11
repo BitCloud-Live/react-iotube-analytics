@@ -1,19 +1,19 @@
 {
   "files": {
     "main.css": "/react-iotube-analytics/static/css/main.11c39e49.chunk.css",
-    "main.js": "/react-iotube-analytics/static/js/main.4986aa2d.chunk.js",
-    "main.js.map": "/react-iotube-analytics/static/js/main.4986aa2d.chunk.js.map",
-    "runtime-main.js": "/react-iotube-analytics/static/js/runtime-main.ac0dd589.js",
-    "runtime-main.js.map": "/react-iotube-analytics/static/js/runtime-main.ac0dd589.js.map",
+    "main.js": "/react-iotube-analytics/static/js/main.c3de8c55.chunk.js",
+    "main.js.map": "/react-iotube-analytics/static/js/main.c3de8c55.chunk.js.map",
+    "runtime-main.js": "/react-iotube-analytics/static/js/runtime-main.48ca4898.js",
+    "runtime-main.js.map": "/react-iotube-analytics/static/js/runtime-main.48ca4898.js.map",
     "static/css/2.e01eca1c.chunk.css": "/react-iotube-analytics/static/css/2.e01eca1c.chunk.css",
-    "static/js/2.da3d39ca.chunk.js": "/react-iotube-analytics/static/js/2.da3d39ca.chunk.js",
-    "static/js/2.da3d39ca.chunk.js.map": "/react-iotube-analytics/static/js/2.da3d39ca.chunk.js.map",
-    "static/js/3.f1922725.chunk.js": "/react-iotube-analytics/static/js/3.f1922725.chunk.js",
-    "static/js/3.f1922725.chunk.js.map": "/react-iotube-analytics/static/js/3.f1922725.chunk.js.map",
+    "static/js/2.619e48d7.chunk.js": "/react-iotube-analytics/static/js/2.619e48d7.chunk.js",
+    "static/js/2.619e48d7.chunk.js.map": "/react-iotube-analytics/static/js/2.619e48d7.chunk.js.map",
+    "static/js/3.3db803f4.chunk.js": "/react-iotube-analytics/static/js/3.3db803f4.chunk.js",
+    "static/js/3.3db803f4.chunk.js.map": "/react-iotube-analytics/static/js/3.3db803f4.chunk.js.map",
     "index.html": "/react-iotube-analytics/index.html",
     "static/css/2.e01eca1c.chunk.css.map": "/react-iotube-analytics/static/css/2.e01eca1c.chunk.css.map",
     "static/css/main.11c39e49.chunk.css.map": "/react-iotube-analytics/static/css/main.11c39e49.chunk.css.map",
-    "static/js/2.da3d39ca.chunk.js.LICENSE.txt": "/react-iotube-analytics/static/js/2.da3d39ca.chunk.js.LICENSE.txt",
+    "static/js/2.619e48d7.chunk.js.LICENSE.txt": "/react-iotube-analytics/static/js/2.619e48d7.chunk.js.LICENSE.txt",
     "static/media/AAVE.e148933d.png": "/react-iotube-analytics/static/media/AAVE.e148933d.png",
     "static/media/BUSD.171a77d8.png": "/react-iotube-analytics/static/media/BUSD.171a77d8.png",
     "static/media/CYC.76fb17f4.jpg": "/react-iotube-analytics/static/media/CYC.76fb17f4.jpg",
@@ -30,10 +30,10 @@
     "static/media/logo-type.1f466f10.png": "/react-iotube-analytics/static/media/logo-type.1f466f10.png"
   },
   "entrypoints": [
-    "static/js/runtime-main.ac0dd589.js",
+    "static/js/runtime-main.48ca4898.js",
     "static/css/2.e01eca1c.chunk.css",
-    "static/js/2.da3d39ca.chunk.js",
+    "static/js/2.619e48d7.chunk.js",
     "static/css/main.11c39e49.chunk.css",
-    "static/js/main.4986aa2d.chunk.js"
+    "static/js/main.c3de8c55.chunk.js"
   ]
 }
